@@ -53,7 +53,7 @@ services:
         hard: 65535
     volumes:
       - ./elasticsearch/data1:/usr/share/elasticsearch/data
-    #      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    #      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml#elasticsearch配置文件
     ports:
       - 9201:9200
     networks:
@@ -79,7 +79,7 @@ services:
         hard: 65535
     volumes:
       - ./elasticsearch/data2:/usr/share/elasticsearch/data
-    #      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    #      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml#elasticsearch配置文件
     ports:
       - 9202:9200
     networks:
