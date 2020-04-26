@@ -1,0 +1,101 @@
+#Version 1.0
+#Author tiango <tiaogotech@foxmail.com>
+#Date 2020-04-19
+
+version: '3.2'
+services:
+  es01:
+    build:
+      context: ./elasticsearch/
+      dockerfile: Dockerfile
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65535
+        hard: 65535
+    volumes:
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
+#      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9200:9200
+    expose:
+      - 9200
+    networks:
+      - elastic
+  es02:
+    build:
+      context: ./elasticsearch/
+      dockerfile: Dockerfile
+    container_name: es02
+    environment:
+      - node.name=es02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65535
+        hard: 65535
+    volumes:
+      - ./elasticsearch/data1:/usr/share/elasticsearch/data
+    #      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9201:9200
+    networks:
+      - elastic
+  es03:
+    build:
+      context: ./elasticsearch/
+      dockerfile: Dockerfile
+    container_name: es03
+    environment:
+      - node.name=es03
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es02
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65535
+        hard: 65535
+    volumes:
+      - ./elasticsearch/data2:/usr/share/elasticsearch/data
+    #      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9202:9200
+    networks:
+      - elastic
+  kibana:
+    image: kibana:7.6.2
+    container_name: kibana
+    ports:
+      - 5601:5601
+    volumes:
+      - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+#    command: "/usr/share/kibana/bin/kibana plugin --install elastic/sense"
+    networks:
+      - elastic
+
+
+networks:
+  elastic:
+    driver: bridge
