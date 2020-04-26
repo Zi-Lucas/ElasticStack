@@ -93,8 +93,7 @@ services:
       - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
     networks:
       - elastic
-
-
+#修复bug
 networks:
   elastic:
     driver: bridge
