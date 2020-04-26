@@ -25,7 +25,7 @@ services:
         hard: 65535
     volumes:
       - ./elasticsearch/data:/usr/share/elasticsearch/data
-#      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+#      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml#elasticsearch配置文件
     ports:
       - 9200:9200
     expose:
