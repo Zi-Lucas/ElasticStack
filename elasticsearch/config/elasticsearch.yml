@@ -67,11 +67,11 @@ http.port: 9200
 # Pass an initial list of hosts to perform discovery when new node is started:
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
-#discovery.zen.ping.unicast.hosts: ["host1", "host2"]
+discovery.zen.ping.unicast.hosts: ["es01","es01"]
 #
 # Prevent the "split brain" by configuring the majority of nodes (total number of master-eligible nodes / 2 + 1):
 #
-discovery.zen.minimum_master_nodes: 1
+discovery.zen.minimum_master_nodes: 3
 #
 # For more information, consult the zen discovery module documentation.
 #
@@ -94,4 +94,4 @@ http.cors.allow-origin: "*"
 node.master: true
 node.data: true
 
-cluster.initial_master_nodes: ["es01"]
+cluster.initial_master_nodes: ["es01","es01","es01"]
